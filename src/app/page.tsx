@@ -1,103 +1,406 @@
+"use client";
+import { useState, useRef, useEffect, RefObject } from "react";
+import redShoe from "../assets/images/red-shoe.png";
+import blueShoe from "../assets/images/blue-shoe.png";
+import greenShoe from "../assets/images/green-shoe.png";
 import Image from "next/image";
-
+import gsap from "gsap";
+import { SplitText } from "gsap/all";
+import { useGSAP } from "@gsap/react";
+import { ScrollTrigger } from "gsap/all";
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+  gsap.registerPlugin(ScrollTrigger);
+  const [bgColor, setBgColor] = useState("red");
+  const [menuOpen, setMenuOpen] = useState(false);
+  // SCROLL refs (outer wrapper)
+  const redScrollRef = useRef(null);
+  const blueScrollRef = useRef(null);
+  const greenScrollRef = useRef(null);
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+  // CLICK refs (inner wrapper)
+  const redClickRef = useRef(null);
+  const blueClickRef = useRef(null);
+  const greenClickRef = useRef(null);
+
+  // existing refs
+  const boxRef1 = useRef(null);
+  const boxRef2 = useRef(null);
+  const boxRef3 = useRef(null);
+
+  const [activeImageRef, setActiveImageRef] =
+    useState<RefObject<HTMLDivElement | null> | null>(null);
+  useGSAP(() => {
+    const scrollAnimations = [redScrollRef, blueScrollRef, greenScrollRef];
+
+    scrollAnimations.forEach((ref) => {
+      if (!ref.current) return;
+
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: ref.current,
+          start: "top 10%",
+          end: "+1000",
+          scrub: true,
+          pin: true,
+          pinSpacing: false,
+          // markers: true,
+        },
+      });
+
+      tl.to(ref.current, {
+        yPercent: 30,
+        ease: "power2.inOut",
+      }).to(ref.current, {
+        xPercent: -70,
+        ease: "power2.inOut",
+      });
+    });
+  }, []);
+
+  useGSAP(() => {
+    const heading = new SplitText(".brand-name", { type: "chars words" });
+    gsap.from(heading.chars, {
+      yPercent: 100,
+      duration: 1,
+      stagger: 0.06,
+      ease: "expo.out",
+    });
+  }, []);
+  const [trigger, setTrigger] = useState(0); // this will force animation on each click
+
+  const animateImageHandler = (imageRef: any) => {
+    const tl = gsap.timeline();
+
+    tl.to(imageRef.current, {
+      yPercent: -60,
+      duration: 0.9,
+      yoyo: true,
+      repeat: 1,
+      ease: "power2.inOut",
+    });
+
+    tl.to(
+      [boxRef1.current, boxRef2.current, boxRef3.current],
+      {
+        height: 0,
+        opacity: 0,
+        duration: 0.7,
+        ease: "power2.inOut",
+      },
+      0
+    );
+
+    tl.to(
+      [boxRef1.current, boxRef2.current, boxRef3.current],
+      {
+        height: "600px",
+        opacity: 1,
+        duration: 1,
+        ease: "power2.inOut",
+        onStart: () => {
+          gsap.set([boxRef1.current, boxRef2.current, boxRef3.current], {
+            display: "block",
+          });
+        },
+      },
+      ">0.2"
+    );
+  };
+
+  const handleRedImage = () => {
+    setBgColor("red");
+    setActiveImageRef(redClickRef);
+    setTrigger((prev) => prev + 1);
+  };
+
+  const handleGreenImage = () => {
+    setBgColor("green");
+    setActiveImageRef(greenClickRef);
+    setTrigger((prev) => prev + 1);
+  };
+
+  const handleBlueImage = () => {
+    setBgColor("blue");
+    setActiveImageRef(blueClickRef);
+    setTrigger((prev) => prev + 1);
+  };
+
+  // This will run every time `trigger` changes
+  useEffect(() => {
+    if (!activeImageRef?.current) return;
+
+    const id = requestAnimationFrame(() => {
+      animateImageHandler(activeImageRef);
+    });
+
+    return () => cancelAnimationFrame(id);
+  }, [trigger]);
+
+  return (
+    <div
+      className="w-full text-white relative web"
+      style={{ backgroundColor: bgColor }}
+    >
+      <nav className="flex justify-between items-center px-8 py-6 uppercase text-sm relative z-0">
+        <div className="flex flex-row items-center absolute left-145 z-0">
+          <div className="bg-white p-5 mx-4 w-2 h-[600px]" ref={boxRef1}></div>
+          <div className="bg-white p-5 mx-4 w-2 h-[600px]" ref={boxRef2}></div>
+          <div className="bg-white p-5 mx-4 w-2 h-[600px]" ref={boxRef3}></div>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+        <div className="text-white font-bold text-lg text-bold">Nike</div>
+        {/* Desktop Links */}
+        <div className="hidden md:flex gap-16 text-lg py-3 w-6xl justify-between">
+          <a href="#">All Categories</a>
+          {/* <a href="#">Men</a>
+          <a href="#">Women</a>
+          <a href="#">Kids</a> */}
+          <a href="#">Customize</a>
+        </div>
+
+        {/* Right Side Icons */}
+        <div className="hidden md:flex gap-4">
+          <span className="text-3xl">🔍</span>
+          <span className="text-3xl">🛒</span>
+        </div>
+
+        {/* Hamburger Icon - Mobile only */}
+        <div className="md:hidden">
+          <button
+            onClick={() => setMenuOpen(!menuOpen)}
+            className="text-white text-2xl"
+          >
+            {menuOpen ? "✕" : "☰"}
+          </button>
+        </div>
+      </nav>
+
+      {/* Mobile Menu */}
+      {menuOpen && (
+        <div className="md:hidden bg-black/80 backdrop-blur-sm absolute w-full top-20 left-0 right-0 px-8 py-4 flex flex-col gap-4 text-white text-sm z-40 uppercase">
+          <a href="#" onClick={() => setMenuOpen(false)}>
+            All Cats
+          </a>
+          <a href="#" onClick={() => setMenuOpen(false)}>
+            Men
+          </a>
+          <a href="#" onClick={() => setMenuOpen(false)}>
+            Women
+          </a>
+          <a href="#" onClick={() => setMenuOpen(false)}>
+            Kids
+          </a>
+          <a href="#" onClick={() => setMenuOpen(false)}>
+            Customize
+          </a>
+          <div className="flex gap-4 mt-2">
+            <span>🔍</span>
+            <span>🛒</span>
+          </div>
+        </div>
+      )}
+      {/* Main Content */}
+      <div className="flex flex-col w-11/12 ">
+        <div className="flex flex-col w-full items-center">
+          {/* Container with relative positioning */}
+          <div className="relative flex justify-center items-center w-full h-[400px]">
+            {/* Overlaid Text */}
+            <p className="text-[120px] md:text-[200px] lg:text-[300px]  text-white uppercase font-bold font-stretch-ultra-condensed heading brand-name absolute z-0 text-center">
+              Nike
+            </p>
+
+            <div
+              ref={redScrollRef}
+              className={`absolute transition-opacity duration-300 ${
+                bgColor === "red"
+                  ? "opacity-100"
+                  : "opacity-0 pointer-events-none"
+              }`}
+            >
+              <div ref={redClickRef} className="relative z-40 top-20">
+                <Image src={redShoe} alt="Red Shoe" width={400} height={400} />
+              </div>
+            </div>
+
+            {/* BLUE SHOE */}
+            <div
+              ref={blueScrollRef}
+              className={`absolute transition-opacity duration-300 ${
+                bgColor === "blue"
+                  ? "opacity-100"
+                  : "opacity-0 pointer-events-none"
+              }`}
+            >
+              <div ref={blueClickRef} className="relative z-40 top-20">
+                <Image
+                  src={blueShoe}
+                  alt="Blue Shoe"
+                  width={400}
+                  height={400}
+                />
+              </div>
+            </div>
+
+            {/* GREEN SHOE */}
+            <div
+              ref={greenScrollRef}
+              className={`absolute transition-opacity duration-300 ${
+                bgColor === "green"
+                  ? "opacity-100"
+                  : "opacity-0 pointer-events-none"
+              }`}
+            >
+              <div ref={greenClickRef} className="relative z-40 top-20">
+                <Image
+                  src={greenShoe}
+                  alt="Green Shoe"
+                  width={400}
+                  height={400}
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="w-full flex flex-col md:flex-row px-10 py-10">
+          <div className="md:w-1/2 ">
+            <h1 className="text-4xl md:text-5xl font-bold mb-4 px-6">
+              NIKE JORDAN 265
+            </h1>
+            <p className="text-sm mb-2 px-6">
+              The quality is excellent. Step into legacy with the Nike Jordan
+              265 — where heritage meets performance.
+            </p>
+            <a href="#" className="underline text-sm text-gray-200 px-6">
+              See Details →
+            </a>
+          </div>
+          <div className="flex justify-center mt-10 space-x-4 w-full md:w-1/4">
+            <button
+              className={`w-5 h-5 bg-red-500 rounded-full cursor-pointer ${
+                bgColor == "red"
+                  ? "border-2 border-white"
+                  : "border-2 border-transparent"
+              }`}
+              onClick={handleRedImage}
+            ></button>
+            <button
+              className={`w-5 h-5 bg-green-500 rounded-full cursor-pointer  ${
+                bgColor == "green"
+                  ? "border-2 border-white"
+                  : "border-2 border-transparent"
+              }`}
+              onClick={handleGreenImage}
+            ></button>
+            <button
+              className={`w-5 h-5 bg-blue-500 rounded-full cursor-pointer ${
+                bgColor === "blue"
+                  ? "border-2 border-white"
+                  : "border-2 border-transparent"
+              } `}
+              onClick={handleBlueImage}
+            ></button>
+          </div>
+          <div className="md:w-1/3 text-sm mt-6 md:mt-0">
+            <p>
+              The Nike Jordan 265S combines legendary style with modern
+              performance. Built to stand out, designed to move — this pair
+              speaks legacy.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div className="">
+        <p className="text-[120px] md:text-[200px] lg:text-[300px] text-white text-center  uppercase font-bold font-stretch-ultra-condensed py-0">
+          Nike
+        </p>
+      </div>
+      <div className=" text-white  flex items-center px-10 py-10">
+        <div className="flex w-full max-w-7xl">
+          {/* Left Empty Space (previously for shoe image) */}
+          <div className="w-1/2 hidden md:block" />
+
+          {/* Product Info on Right Side */}
+          <div className="w-full md:w-1/2">
+            <h1 className="text-4xl md:text-5xl font-extrabold uppercase ">
+              Nike Jordan
+              <br />
+              Series
+            </h1>
+            <p className="text-xl font-semibold mt-4">$178.00</p>
+            <p className="mt-3 text-gray-200">
+              Bring the past into the future with the Nike Air Max 2090, a bold
+              look inspired by the DNA of the iconic Air Max 90. Brand-new Nike
+              Air cushioning underfoot adds unparalleled comfort.
+            </p>
+
+            {/* Sizes */}
+            <div className="py-5">
+              <h2 className="mb-2 uppercase text-sm font-bold">
+                Select Size (US)
+              </h2>
+              <div className="flex flex-wrap gap-2">
+                {["7", "8", "8.5", "9", "9.5", "10", "10.5", "12.5"].map(
+                  (size) => (
+                    <button
+                      key={size}
+                      className="bg-white text-black px-3 py-1 rounded font-semibold hover:bg-gray-300 transition"
+                    >
+                      {size}
+                    </button>
+                  )
+                )}
+              </div>
+            </div>
+
+            {/* Colors */}
+            <div className="mt-6">
+              <h2 className="mb-2 uppercase text-sm font-bold">Select Color</h2>
+              <div className="flex gap-3">
+                <button
+                  className={`w-5 h-5 bg-red-500 rounded-full cursor-pointer ${
+                    bgColor == "red"
+                      ? "border-2 border-white"
+                      : "border-2 border-transparent"
+                  }`}
+                  onClick={() => {
+                    setBgColor("red");
+                  }}
+                />
+                <button
+                  className={`w-5 h-5 bg-green-500 rounded-full cursor-pointer ${
+                    bgColor == "green"
+                      ? "border-2 border-white"
+                      : "border-2 border-transparent"
+                  }`}
+                  onClick={() => {
+                    setBgColor("green");
+                  }}
+                />
+                <button
+                  className={`w-5 h-5 bg-blue-500 rounded-full cursor-pointer ${
+                    bgColor == "blue"
+                      ? "border-2 border-white"
+                      : "border-2 border-transparent"
+                  }`}
+                  onClick={() => {
+                    setBgColor("blue");
+                  }}
+                />
+              </div>
+            </div>
+
+            {/* Add to Cart */}
+            <button className="mt-6 bg-white text-red-700 px-5 py-2 rounded-full font-bold hover:bg-gray-200 transition">
+              Add to Cart
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
+
+    //   <div className="relative w-72 h-72 md:w-[900px] md:h-[700px]">
+    //  <Image src={redshoe} alt="Nike Shoe" layout="fill" objectFit="contain"  />
+    //   </div>
   );
 }
