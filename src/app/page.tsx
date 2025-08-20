@@ -13,14 +13,14 @@ export default function Home() {
   const [bgColor, setBgColor] = useState("red");
   const [menuOpen, setMenuOpen] = useState(false);
   // SCROLL refs (outer wrapper)
-  const redScrollRef = useRef(null);
-  const blueScrollRef = useRef(null);
-  const greenScrollRef = useRef(null);
+  const redScrollRef = useRef<HTMLDivElement>(null);
+  const blueScrollRef = useRef<HTMLDivElement>(null);
+  const greenScrollRef = useRef<HTMLDivElement>(null);
 
   // CLICK refs (inner wrapper)
-  const redClickRef = useRef(null);
-  const blueClickRef = useRef(null);
-  const greenClickRef = useRef(null);
+  const redClickRef = useRef<HTMLDivElement | null>(null);
+  const blueClickRef = useRef<HTMLDivElement | null>(null);
+  const greenClickRef = useRef<HTMLDivElement | null>(null);
 
   // existing refs
   const boxRef1 = useRef(null);
@@ -29,6 +29,7 @@ export default function Home() {
 
   const [activeImageRef, setActiveImageRef] =
     useState<RefObject<HTMLDivElement | null> | null>(null);
+
   useGSAP(() => {
     const scrollAnimations = [redScrollRef, blueScrollRef, greenScrollRef];
 
@@ -36,12 +37,15 @@ export default function Home() {
       if (!ref.current) return;
 
       const tl = gsap.timeline({
+        rotation: 360,
+        ease: "none",
         scrollTrigger: {
           trigger: ref.current,
           start: "top 10%",
           end: "+1000",
           scrub: true,
           pin: true,
+
           pinSpacing: false,
           // markers: true,
         },
@@ -58,7 +62,7 @@ export default function Home() {
   }, []);
 
   useGSAP(() => {
-    const heading = new SplitText(".brand-name", { type: "chars words" });
+    const heading = new SplitText(".text-split", { type: "chars words" });
     gsap.from(heading.chars, {
       yPercent: 100,
       duration: 1,
@@ -68,7 +72,7 @@ export default function Home() {
   }, []);
   const [trigger, setTrigger] = useState(0); // this will force animation on each click
 
-  const animateImageHandler = (imageRef: any) => {
+  const animateImageHandler = (imageRef: RefObject<HTMLDivElement>) => {
     const tl = gsap.timeline();
 
     tl.to(imageRef.current, {
@@ -135,6 +139,24 @@ export default function Home() {
 
     return () => cancelAnimationFrame(id);
   }, [trigger]);
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      gsap.fromTo(
+        ".animated-text",
+        { opacity: 0, y: 20 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 1.5,
+          ease: "power3.out",
+          repeat: -1,
+          yoyo: true,
+        }
+      );
+    });
+
+    return () => ctx.revert();
+  }, []);
 
   return (
     <div
@@ -147,9 +169,11 @@ export default function Home() {
           <div className="bg-white p-5 mx-4 w-2 h-[600px]" ref={boxRef2}></div>
           <div className="bg-white p-5 mx-4 w-2 h-[600px]" ref={boxRef3}></div>
         </div>
-        <div className="text-white font-bold text-lg text-bold">Nike</div>
+        <div className="text-white font-bold text-lg text-bold animated-text">
+          Nike
+        </div>
         {/* Desktop Links */}
-        <div className="hidden md:flex gap-16 text-lg py-3 w-6xl justify-between">
+        <div className="hidden md:flex gap-16 text-lg py-3 w-6xl justify-between animated-text">
           <a href="#">All Categories</a>
           {/* <a href="#">Men</a>
           <a href="#">Women</a>
@@ -204,7 +228,7 @@ export default function Home() {
           {/* Container with relative positioning */}
           <div className="relative flex justify-center items-center w-full h-[400px]">
             {/* Overlaid Text */}
-            <p className="text-[120px] md:text-[200px] lg:text-[300px]  text-white uppercase font-bold font-stretch-ultra-condensed heading brand-name absolute z-0 text-center">
+            <p className="text-[120px] md:text-[200px] lg:text-[300px]  text-white uppercase font-bold font-stretch-ultra-condensed heading text-split absolute z-0 text-center">
               Nike
             </p>
 
@@ -263,14 +287,17 @@ export default function Home() {
 
         <div className="w-full flex flex-col md:flex-row px-10 py-10">
           <div className="md:w-1/2 ">
-            <h1 className="text-4xl md:text-5xl font-bold mb-4 px-6">
+            <h1 className="text-4xl md:text-5xl font-bold mb-4 px-6 animated-text">
               NIKE JORDAN 265
             </h1>
-            <p className="text-sm mb-2 px-6">
+            <p className="text-sm mb-2 px-6 animated-text">
               The quality is excellent. Step into legacy with the Nike Jordan
               265 — where heritage meets performance.
             </p>
-            <a href="#" className="underline text-sm text-gray-200 px-6">
+            <a
+              href="#"
+              className="underline text-sm text-gray-200 px-6 animated-text"
+            >
               See Details →
             </a>
           </div>
@@ -301,7 +328,7 @@ export default function Home() {
             ></button>
           </div>
           <div className="md:w-1/3 text-sm mt-6 md:mt-0">
-            <p>
+            <p className="animated-text">
               The Nike Jordan 265S combines legendary style with modern
               performance. Built to stand out, designed to move — this pair
               speaks legacy.
@@ -311,7 +338,7 @@ export default function Home() {
       </div>
 
       <div className="">
-        <p className="text-[120px] md:text-[200px] lg:text-[300px] text-white text-center  uppercase font-bold font-stretch-ultra-condensed py-0">
+        <p className="text-[120px] md:text-[200px] lg:text-[300px] text-white text-center  uppercase font-bold font-stretch-ultra-condensed py-0 animated-text z-0">
           Nike
         </p>
       </div>
@@ -322,13 +349,13 @@ export default function Home() {
 
           {/* Product Info on Right Side */}
           <div className="w-full md:w-1/2">
-            <h1 className="text-4xl md:text-5xl font-extrabold uppercase ">
+            <h1 className="text-4xl md:text-5xl font-extrabold uppercase  animated-text">
               Nike Jordan
               <br />
               Series
             </h1>
-            <p className="text-xl font-semibold mt-4">$178.00</p>
-            <p className="mt-3 text-gray-200">
+            <p className="text-xl font-semibold mt-4 animated-text">$178.00</p>
+            <p className="mt-3 text-gray-200 animated-text">
               Bring the past into the future with the Nike Air Max 2090, a bold
               look inspired by the DNA of the iconic Air Max 90. Brand-new Nike
               Air cushioning underfoot adds unparalleled comfort.
@@ -336,7 +363,7 @@ export default function Home() {
 
             {/* Sizes */}
             <div className="py-5">
-              <h2 className="mb-2 uppercase text-sm font-bold">
+              <h2 className="mb-2 uppercase text-sm font-bold animated-text">
                 Select Size (US)
               </h2>
               <div className="flex flex-wrap gap-2">
@@ -344,7 +371,7 @@ export default function Home() {
                   (size) => (
                     <button
                       key={size}
-                      className="bg-white text-black px-3 py-1 rounded font-semibold hover:bg-gray-300 transition"
+                      className="bg-white text-black px-3 py-1 rounded font-semibold hover:bg-gray-300 transition animated-text"
                     >
                       {size}
                     </button>
@@ -355,7 +382,9 @@ export default function Home() {
 
             {/* Colors */}
             <div className="mt-6">
-              <h2 className="mb-2 uppercase text-sm font-bold">Select Color</h2>
+              <h2 className="mb-2 uppercase text-sm font-bold animated-text">
+                Select Color
+              </h2>
               <div className="flex gap-3">
                 <button
                   className={`w-5 h-5 bg-red-500 rounded-full cursor-pointer ${
@@ -391,7 +420,7 @@ export default function Home() {
             </div>
 
             {/* Add to Cart */}
-            <button className="mt-6 bg-white text-red-700 px-5 py-2 rounded-full font-bold hover:bg-gray-200 transition">
+            <button className="mt-6 bg-white text-red-700 px-5 py-2 rounded-full font-bold hover:bg-gray-200 transition animated-text">
               Add to Cart
             </button>
           </div>
