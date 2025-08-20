@@ -27,8 +27,9 @@ export default function Home() {
   const boxRef2 = useRef(null);
   const boxRef3 = useRef(null);
 
-  const [activeImageRef, setActiveImageRef] =
-    useState<RefObject<HTMLDivElement | null> | null>(null);
+  const [activeImageRef, setActiveImageRef] = useState<
+    RefObject<HTMLDivElement>
+  >;
 
   useGSAP(() => {
     const scrollAnimations = [redScrollRef, blueScrollRef, greenScrollRef];
