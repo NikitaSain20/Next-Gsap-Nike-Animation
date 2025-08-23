@@ -99,7 +99,7 @@ npm run dev
 👉 http://localhost:3000
 
 ## 🎥 Demo Video
-[Watch the demo](./public/assets/nike-gif.gif)
+[Watch the demo](public/assets/nike-gif.gif)
 
 </div>
 
