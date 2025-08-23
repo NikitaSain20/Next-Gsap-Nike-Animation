@@ -6,20 +6,6 @@ First, run the development server:
 
 npm run dev
 
-# or
-
-yarn dev
-
-# or
-
-pnpm dev
-
-# or
-
-bun dev
-
-```
-
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
@@ -81,26 +67,24 @@ Icons: Lucide React
 
 Clone the repo
 
-git clone https://github.com/your-username/next-gsap-nike-animation.git
+git clone https://github.com/NikitaSain20/Next-Gsap-Nike-Animation
 cd next-gsap-nike-animation
-
 
 Install dependencies
 
 npm install
 
-
 Run the dev server
 
 npm run dev
 
+## Open in browser
 
-##  Open in browser
 👉 http://localhost:3000
 
 ## 🎥 Demo GIF
-![Nike GSAP Animation Demo](public/assets/nike-gif.gif)
 
+![Nike GSAP Animation Demo](public/assets/nike-gif.gif)
 
 ## 🙋‍♀️ Author
 
@@ -111,11 +95,12 @@ Check out my GitHub for more projects: @NikitaSain20
 
 ## 📌 Future Improvements
 
- Add more product variants
+Add more product variants
 
- Add cart/checkout functionality
+Add cart/checkout functionality
 
- Improve accessibility (ARIA roles)
+Improve accessibility (ARIA roles)
 
- Enhance mobile animations
+```
+
 ```
