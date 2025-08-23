@@ -98,10 +98,9 @@ npm run dev
 ##  Open in browser
 👉 http://localhost:3000
 
-## 🎥 Demo Video
-[Watch the demo](public/assets/nike-gif.gif)
+## 🎥 Demo GIF
+![Nike GSAP Animation Demo](public/assets/nike-gif.gif)
 
-</div>
 
 ## 🙋‍♀️ Author
 
