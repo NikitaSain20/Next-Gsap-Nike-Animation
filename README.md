@@ -4,14 +4,20 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 
 First, run the development server:
 
-```bash
 npm run dev
+
 # or
+
 yarn dev
+
 # or
+
 pnpm dev
+
 # or
+
 bun dev
+
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
@@ -34,3 +40,89 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+👟 Nike GSAP Animation – Next.js + GSAP
+
+A Nike-inspired animated landing page built with Next.js, GSAP, and Tailwind CSS.
+The project features scroll-triggered animations, smooth transitions, and dynamic shoe color variants for a modern and interactive experience.
+
+🔗 Live Demo: Nike GSAP Animation
+
+## 🧩 Features
+
+## 🎨 Landing Page
+
+GSAP-powered animations (scroll, fade, rotate)
+
+Responsive design for desktop and mobile
+
+Dynamic shoe color switching (Red, Green, Blue)
+
+Bold Nike-styled typography
+
+## ⚡ Animations
+
+ScrollTrigger Effects for text and images
+
+Smooth transitions on shoe hover and movement
+
+Pinned sections with scroll-based motion
+
+## 🛠️ Tech Stack
+
+Framework: Next.js
+
+Styling: Tailwind CSS
+
+Animations: GSAP + ScrollTrigger
+
+Icons: Lucide React
+
+## ⚙️ Installation
+
+Clone the repo
+
+git clone https://github.com/your-username/next-gsap-nike-animation.git
+cd next-gsap-nike-animation
+
+
+Install dependencies
+
+npm install
+
+
+Run the dev server
+
+npm run dev
+
+
+##  Open in browser
+👉 http://localhost:3000
+
+## 📸 Screenshots
+
+<div align="center">
+  <img src="frontend/public/screenshots/1.png" width="45%" style="margin: 10px;" />
+  <img src="frontend/public/screenshots/2.png" width="45%" style="margin: 10px;" />
+  <br/>
+  <img src="frontend/public/screenshots/3.png" width="45%" style="margin: 10px;" />
+  <img src="frontend/public/screenshots/4.png" width="45%" style="margin: 10px;" />
+
+</div>
+
+## 🙋‍♀️ Author
+
+Nikita Sain
+Check out my GitHub for more projects: @NikitaSain20
+
+🔗 GitHub
+
+## 📌 Future Improvements
+
+ Add more product variants
+
+ Add cart/checkout functionality
+
+ Improve accessibility (ARIA roles)
+
+ Enhance mobile animations
+```
