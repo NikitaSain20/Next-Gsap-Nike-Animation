@@ -171,9 +171,6 @@ export default function Home() {
 
         <div className="hidden md:flex gap-16 text-lg py-3 w-6xl justify-between animated-text">
           <a href="#">All Categories</a>
-          {/* <a href="#">Men</a>
-          <a href="#">Women</a>
-          <a href="#">Kids</a> */}
           <a href="#">Customize</a>
         </div>
 
@@ -183,7 +180,6 @@ export default function Home() {
           <span className="text-3xl animated-text">🛒</span>
         </div>
 
-        {/* Hamburger Icon - Mobile only */}
         <div className="md:hidden">
           <button
             onClick={() => setMenuOpen(!menuOpen)}
@@ -194,7 +190,6 @@ export default function Home() {
         </div>
       </nav>
 
-      {/* Mobile Menu */}
       {menuOpen && (
         <div className="md:hidden bg-black/80 backdrop-blur-sm absolute w-full top-20 left-0 right-0 px-8 py-4 flex flex-col gap-4 text-white text-sm z-40 uppercase">
           <a href="#" onClick={() => setMenuOpen(false)}>
@@ -218,12 +213,10 @@ export default function Home() {
           </div>
         </div>
       )}
-      {/* Main Content */}
+
       <div className="flex flex-col w-11/12 ">
         <div className="flex flex-col w-full items-center">
-          {/* Container with relative positioning */}
           <div className="relative flex justify-center items-center w-full h-[400px]">
-            {/* Overlaid Text */}
             <p className="text-[120px] md:text-[200px] lg:text-[300px]  text-white uppercase font-bold font-stretch-ultra-condensed heading text-split absolute z-0 text-center">
               Nike
             </p>
@@ -241,7 +234,6 @@ export default function Home() {
               </div>
             </div>
 
-            {/* BLUE SHOE */}
             <div
               ref={blueScrollRef}
               className={`absolute transition-opacity duration-300 ${
@@ -260,7 +252,6 @@ export default function Home() {
               </div>
             </div>
 
-            {/* GREEN SHOE */}
             <div
               ref={greenScrollRef}
               className={`absolute transition-opacity duration-300 ${
@@ -340,10 +331,8 @@ export default function Home() {
       </div>
       <div className=" text-white  flex items-center px-10 py-10">
         <div className="flex w-full max-w-7xl">
-          {/* Left Empty Space (previously for shoe image) */}
           <div className="w-1/2 hidden md:block" />
 
-          {/* Product Info on Right Side */}
           <div className="w-full md:w-1/2">
             <h1 className="text-4xl md:text-5xl font-extrabold uppercase  animated-text">
               Nike Jordan
@@ -357,7 +346,6 @@ export default function Home() {
               Air cushioning underfoot adds unparalleled comfort.
             </p>
 
-            {/* Sizes */}
             <div className="py-5">
               <h2 className="mb-2 uppercase text-sm font-bold animated-text">
                 Select Size (US)
@@ -376,7 +364,6 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Colors */}
             <div className="mt-6">
               <h2 className="mb-2 uppercase text-sm font-bold animated-text">
                 Select Color
@@ -415,7 +402,6 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Add to Cart */}
             <button className="mt-6 bg-white text-red-700 px-5 py-2 rounded-full font-bold hover:bg-gray-200 transition animated-text">
               Add to Cart
             </button>
@@ -423,9 +409,5 @@ export default function Home() {
         </div>
       </div>
     </div>
-
-    //   <div className="relative w-72 h-72 md:w-[900px] md:h-[700px]">
-    //  <Image src={redshoe} alt="Nike Shoe" layout="fill" objectFit="contain"  />
-    //   </div>
   );
 }
