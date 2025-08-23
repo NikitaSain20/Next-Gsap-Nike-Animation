@@ -1,5 +1,6 @@
 "use client";
 import { useState, useRef, useEffect, RefObject } from "react";
+
 import redShoe from "../assets/images/red-shoe.png";
 import blueShoe from "../assets/images/blue-shoe.png";
 import greenShoe from "../assets/images/green-shoe.png";
@@ -12,17 +13,15 @@ export default function Home() {
   gsap.registerPlugin(ScrollTrigger);
   const [bgColor, setBgColor] = useState("red");
   const [menuOpen, setMenuOpen] = useState(false);
-  // SCROLL refs (outer wrapper)
+
   const redScrollRef = useRef<HTMLDivElement>(null);
   const blueScrollRef = useRef<HTMLDivElement>(null);
   const greenScrollRef = useRef<HTMLDivElement>(null);
 
-  // CLICK refs (inner wrapper)
-  const redClickRef = useRef<HTMLDivElement | null>(null);
-  const blueClickRef = useRef<HTMLDivElement | null>(null);
-  const greenClickRef = useRef<HTMLDivElement | null>(null);
+  const redClickRef = useRef<HTMLDivElement>(null);
+  const blueClickRef = useRef<HTMLDivElement>(null);
+  const greenClickRef = useRef<HTMLDivElement>(null);
 
-  // existing refs
   const boxRef1 = useRef(null);
   const boxRef2 = useRef(null);
   const boxRef3 = useRef(null);
@@ -37,25 +36,23 @@ export default function Home() {
       if (!ref.current) return;
 
       const tl = gsap.timeline({
-        rotation: 360,
-        ease: "none",
         scrollTrigger: {
           trigger: ref.current,
           start: "top 10%",
           end: "+1000",
           scrub: true,
           pin: true,
-
           pinSpacing: false,
-          // markers: true,
         },
       });
 
       tl.to(ref.current, {
         yPercent: 30,
+        rotation: 90,
         ease: "power2.inOut",
       }).to(ref.current, {
         xPercent: -70,
+        rotation: 360,
         ease: "power2.inOut",
       });
     });
@@ -70,14 +67,14 @@ export default function Home() {
       ease: "expo.out",
     });
   }, []);
-  const [trigger, setTrigger] = useState(0); // this will force animation on each click
+  const [trigger, setTrigger] = useState(0);
 
   const animateImageHandler = (imageRef: RefObject<HTMLDivElement>) => {
     const tl = gsap.timeline();
 
     tl.to(imageRef.current, {
       yPercent: -60,
-      duration: 0.9,
+      duration: 0.8,
       yoyo: true,
       repeat: 1,
       ease: "power2.inOut",
@@ -129,7 +126,6 @@ export default function Home() {
     setTrigger((prev) => prev + 1);
   };
 
-  // This will run every time `trigger` changes
   useEffect(() => {
     if (!activeImageRef?.current) return;
 
@@ -172,7 +168,7 @@ export default function Home() {
         <div className="text-white font-bold text-lg text-bold animated-text">
           Nike
         </div>
-        {/* Desktop Links */}
+
         <div className="hidden md:flex gap-16 text-lg py-3 w-6xl justify-between animated-text">
           <a href="#">All Categories</a>
           {/* <a href="#">Men</a>
@@ -183,8 +179,8 @@ export default function Home() {
 
         {/* Right Side Icons */}
         <div className="hidden md:flex gap-4">
-          <span className="text-3xl">🔍</span>
-          <span className="text-3xl">🛒</span>
+          <span className="text-3xl animated-text">🔍</span>
+          <span className="text-3xl animated-text">🛒</span>
         </div>
 
         {/* Hamburger Icon - Mobile only */}
