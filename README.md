@@ -98,14 +98,8 @@ npm run dev
 ##  Open in browser
 👉 http://localhost:3000
 
-## 📸 Screenshots
-
-<div align="center">
-  <img src="frontend/public/screenshots/1.png" width="45%" style="margin: 10px;" />
-  <img src="frontend/public/screenshots/2.png" width="45%" style="margin: 10px;" />
-  <br/>
-  <img src="frontend/public/screenshots/3.png" width="45%" style="margin: 10px;" />
-  <img src="frontend/public/screenshots/4.png" width="45%" style="margin: 10px;" />
+## 🎥 Demo Video
+[Watch the demo](./public/assets/gsap.mp4)
 
 </div>
 
