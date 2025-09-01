@@ -36,8 +36,8 @@ Icons: Lucide React
 ## 📸 Screenshots
 
 <div align="center">
-  <img src="public/Screenshot-1.png" width="45%" style="margin: 10px;" />
-  <img src="public/Screenshot-2.png" width="45%" style="margin: 10px;" />
+  <img src="public/Screenshot1.png" width="45%" style="margin: 10px;" />
+  <img src="public/Screenshot2.png" width="45%" style="margin: 10px;" />
 </div>
 
 ## ⚙️ Installation
