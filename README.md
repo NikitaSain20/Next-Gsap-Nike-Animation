@@ -1,15 +1,3 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
-
-## Getting Started
-
-First, run the development server:
-
-npm run dev
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
 A Nike-inspired animated landing page built with Next.js, GSAP, and Tailwind CSS.
 The project features scroll-triggered animations, smooth transitions, and dynamic shoe color variants for a modern and interactive experience.
 
@@ -44,6 +32,13 @@ Styling: Tailwind CSS
 Animations: GSAP + ScrollTrigger
 
 Icons: Lucide React
+
+## 📸 Screenshots
+
+<div align="center">
+  <img src="public/Screenshot-1.png" width="45%" style="margin: 10px;" />
+  <img src="public/Screenshot-2.png" width="45%" style="margin: 10px;" />
+</div>
 
 ## ⚙️ Installation
 
