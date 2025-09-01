@@ -65,9 +65,3 @@ Nikita Sain
 Check out my GitHub for more projects: @NikitaSain20
 
 🔗 GitHub
-
-## 📌 Future Improvements
-
-Add more product variants
-
-Add cart/checkout functionality
